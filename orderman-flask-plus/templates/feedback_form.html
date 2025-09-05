@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Залишити відгук</h2>
+<form method="post" class="form">
+  {{ form.hidden_tag() }}
+  <label>{{ form.name.label }} {{ form.name(size=40, placeholder="Ваше ім'я (необов'язково)") }}</label>
+  <label>{{ form.message.label }} {{ form.message(rows=4, placeholder="Ваш відгук") }}</label>
+  <label>{{ form.rating.label }} {{ form.rating() }}</label>
+  <button type="submit">Надіслати</button>
+</form>
+{% if form.errors %}
+  <div class="alert">Будь ласка, виправте помилки у формі.</div>
+{% endif %}
+{% endblock %}

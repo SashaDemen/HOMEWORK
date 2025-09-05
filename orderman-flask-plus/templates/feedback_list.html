@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Відгуки</h2>
+{% if items %}
+  <ul class="feedbacks">
+    {% for it in items %}
+      {# колір за рейтингом: 4-5 зелений, 1-2 червоний #}
+      {% set cls = 'good' if it['rating']|int >= 4 else ('bad' if it['rating']|int <= 2 else '') %}
+      <li class="card {{ cls }}">
+        <div class="meta">
+          <b>{{ it['name'] or 'Анонім' }}</b> • {{ it['created_at'] }} • Оцінка: {{ it['rating'] }}
+        </div>
+        <div class="msg">{{ it['message'] }}</div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Поки що відгуків немає. Будьте першим! <a href="{{ url_for('feedback_form') }}">Залишити відгук</a>.</p>
+{% endif %}
+{% endblock %}
