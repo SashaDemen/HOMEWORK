@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or "Oderman" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1 class="brand">Oderman Pizzeria</h1>
+      <nav class="nav">
+        <a href="{{ url_for('index') }}">Головна</a>
+        <a href="{{ url_for('menu') }}">Меню</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">© Oderman</div>
+  </footer>
+</body>
+</html>
