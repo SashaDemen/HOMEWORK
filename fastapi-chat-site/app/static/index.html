@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Realtime Chat</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header><h1>Realtime Chat</h1><span id="status">offline</span></header>
+
+    <section id="auth">
+      <h2>Вхід</h2>
+      <div class="row">
+        <input id="username" placeholder="alice або bob" value="alice">
+        <input id="password" type="password" placeholder="пароль" value="Secret#123">
+        <button id="loginBtn">Увійти</button>
+      </div>
+      <p class="hint">Демо: alice/bob, пароль <code>Secret#123</code>.</p>
+    </section>
+
+    <section id="chat" class="hidden">
+      <div id="messages"></div>
+      <div class="row">
+        <input id="msg" placeholder="Ваше повідомлення…">
+        <button id="sendBtn">Надіслати</button>
+      </div>
+    </section>
+
+    <footer>© Chat • FastAPI + WebSocket</footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
