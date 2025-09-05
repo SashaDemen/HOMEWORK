@@ -17,15 +17,13 @@ class LoggingAndHeaderMiddleware(BaseHTTPMiddleware):
 
     def __init__(self, app: FastAPI, *, exclude_paths: Iterable[str] = ()):
         super().__init__(app)
-        # Шляхи, для яких заголовок НЕ обов'язковий
         self.exclude_paths = set(exclude_paths)
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        # 1) Логування моменту отримання
         now = datetime.now(tz=timezone.utc).isoformat()
         print(f"[{now}] {request.method} {request.url}")
 
-        # 2) Перевірка заголовка (за винятком exclude_paths)
+
         path = request.url.path
         if path not in self.exclude_paths:
             if "X-Custom-Header" not in request.headers:
@@ -38,7 +36,7 @@ class LoggingAndHeaderMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 
 
-# Підключаємо middleware з винятками
+
 app.add_middleware(
     LoggingAndHeaderMiddleware,
     exclude_paths=("/docs", "/redoc", "/openapi.json", "/public"),
