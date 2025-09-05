@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Уроки</h2>
+<table class="table">
+  <thead>
+    <tr><th>Дата</th><th>Назва</th><th>Опис</th></tr>
+  </thead>
+  <tbody>
+  {% for it in lessons %}
+    <tr>
+      <td>{{ it['lesson_date'] }}</td>
+      <td>{{ it['title'] }}</td>
+      <td>{{ it['note'] }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
