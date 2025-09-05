@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <img class="hero-img" src="{{ url_for('static', filename='img/pizzeria.png') }}" alt="Pizzeria">
+  <div class="hero-text">
+    <div class="hero-title">ODERМАН</div>
+    <a class="btn" href="{{ url_for('menu') }}">МЕНЮ</a>
+  </div>
+</section>
+<section>
+  <p>Смачна піца, швидка доставка. Обирайте у меню нижче.</p>
+</section>
+{% endblock %}
