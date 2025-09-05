@@ -1,0 +1,6 @@
+#змінні, типи даніх
+price = 16720
+discount = 35
+discount_amount = price * discount / 100
+final_price = price - discount_amount
+print("Вартість гарячої путівки:", final_price, "грн")
