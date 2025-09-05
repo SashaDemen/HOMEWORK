@@ -1,0 +1,73 @@
+
+from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel, field_validator
+
+app = FastAPI(title="Names API", version="1.0.0")
+
+
+app.state.names: set[str] = set()
+
+
+class NameIn(BaseModel):
+    name: str
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str) -> str:
+        v = v.strip()
+        if not v:
+            raise ValueError("Name cannot be empty")
+        if len(v) > 100:
+            raise ValueError("Name is too long")
+        return v
+
+
+@app.post(
+    "/users",
+    status_code=status.HTTP_201_CREATED,
+    summary="Додати ім'я",
+    responses={
+        201: {"description": "Ім'я успішно додано"},
+        409: {"description": "Таке ім'я вже існує"},
+        422: {"description": "Неточні дані (порожнє ім'я, тощо)"},
+    },
+)
+def add_user(payload: NameIn):
+    name = payload.name
+    if name in app.state.names:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Name '{name}' already exists",
+        )
+    app.state.names.add(name)
+    return {"message": "created", "name": name}
+
+
+@app.get(
+    "/users",
+    summary="Отримати всі імена",
+    response_model=list[str],
+)
+def list_users():
+    return sorted(app.state.names)
+
+
+@app.delete(
+    "/users/{name}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Видалити ім'я",
+    responses={
+        204: {"description": "Ім'я видалено"},
+        404: {"description": "Ім'я не знайдено"},
+    },
+)
+def delete_user(name: str):
+    name = name.strip()
+    if name not in app.state.names:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Name '{name}' not found",
+        )
+    app.state.names.remove(name)
+    # 204 No Content — без тіла відповіді
+    return
